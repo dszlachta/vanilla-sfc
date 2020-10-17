@@ -33,11 +33,13 @@ export function createGenerateTemplateExport(exportName) {
 }
 
 export function prependToModule(moduleSource, newContent) {
-    const moduleProgram = parse(moduleSource, { sourceType: 'module' });
+    const moduleProgram = [
+        template.ast(moduleSource)
+    ].flatMap(x => x);
     const newContentProgram = t.program([newContent]);
 
     return generate(t.program([
         ...newContentProgram.body,
-        ...moduleProgram.program.body
+        ...moduleProgram
     ])).code;
 }

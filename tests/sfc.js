@@ -63,23 +63,3 @@ test('Templates extractor', t => {
 
     t.assert(resultWithMultipleTemplates.length === 2, 'returns correct number of nodes');
 });
-
-test('appendToScript', t => {
-    const scriptContent = '42;';
-    const contentToBeAppended = `'whale!'`;
-
-    const appendToScript = Sfc.createAppendToScript(contentToBeAppended);
-
-    t.assert(typeof appendToScript === 'function', 'is function');
-
-    const result = appendToScript(scriptContent);
-    const expectedResult = [
-        Sfc.wrapIntoExportedFunction(
-            Sfc.getTemplatesFunctionName,
-            contentToBeAppended
-        ),
-        scriptContent
-    ].join('\n');
-
-    t.is(result, expectedResult, 'produces correct result');
-});

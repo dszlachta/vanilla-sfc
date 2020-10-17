@@ -1,9 +1,3 @@
-import jsdom from 'jsdom';
-
-const { fragment } = jsdom.JSDOM;
-
-export const getTemplatesFunctionName = '_getTemplates';
-
 export function createScriptExtractor(throwError) {
     return function extractScript(fragmentDOM) {
         const scriptTags = [...fragmentDOM.querySelectorAll('script')];
@@ -25,20 +19,8 @@ export function createScriptExtractor(throwError) {
     };
 }
 
-export function wrapIntoExportedFunction(name, returnValue) {
-    return `export const ${name} = () => ${returnValue}`;
-}
-
-export function createAppendToScript(contentToBeAppended) {
-    return function appendToScript(scriptContent) {
-        return [
-            wrapIntoExportedFunction(
-                getTemplatesFunctionName,
-                contentToBeAppended
-            ),
-            scriptContent
-        ].join('\n');
-    };
+export function getScriptSource(scriptTag) {
+    return scriptTag.textContent;
 }
 
 export function createTemplatesExtractor(throwError) {
@@ -51,6 +33,19 @@ export function createTemplatesExtractor(throwError) {
 
         return templateTags;
     };
+}
+
+export function getTemplateContent(templateTag) {
+    return [
+        templateTag.id || 'default',
+        templateTag.innerHTML
+    ];
+}
+
+export function mapTemplateTags(templateTags) {
+    return Object.fromEntries(
+        templateTags.map(getTemplateContent)
+    );
 }
 
 // export function toJavaScript(filePath) {
