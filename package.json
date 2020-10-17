@@ -1,0 +1,20 @@
+{
+    "name": "parcel-plugin-sfc",
+    "type": "module",
+    "version": "0.0.1",
+    "description": "Parcel plugin for bundling files containing both template and script tags",
+    "main": "index.js",
+    "scripts": {
+        "test": "ava"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@parcel/plugin": "^2.0.0-alpha.3",
+        "ava": "^3.13.0",
+        "tape": "^5.0.1"
+    },
+    "dependencies": {
+        "jsdom": "^16.4.0"
+    }
+}

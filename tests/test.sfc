@@ -1,0 +1,16 @@
+<template>
+    <div class="fancy class" id="someId">
+        Some content
+    </div>
+</template>
+
+<template id="second">
+    <span>
+        Second template content
+    </span>
+</template>
+
+<script>
+    'Here comes the fun';
+    'Second line';
+</script>
