@@ -1,37 +1,41 @@
 import jsdom from 'jsdom';
 
+import { pipe } from './functional.js';
 import {
-    createScriptExtractor,
     createTemplatesExtractor,
     getScriptSource,
-    mapTemplateTags
+    mapTemplateTags,
+    createScriptExtractor,
 } from './sfc.js';
 import {
-    generateDictionaryOfStrings,
     createGenerateTemplateExport,
-    prependToModule
+    generateDictionaryOfStrings,
+    prependToModule,
 } from './module_manipulation.js';
 
 const { fragment } = jsdom.JSDOM;
 
 export const getTemplatesFunctionName = '_getTemplates';
 
+const generateTemplateExport = createGenerateTemplateExport(getTemplatesFunctionName);
+
 export function createConvert(filePath) {
-     const throwError = (message) => {
-         throw new Error(`In file: ${filePath}: ${message}`);
-     };
+    const throwError = (message) => {
+        throw new Error(`In file: ${filePath}: ${message}`);
+    };
 
     return function convert(content) {
         const fragmentDOM = fragment(content);
-        const scriptTagExtractor = createScriptExtractor(throwError);
-        const templatesExtractor = createTemplatesExtractor(throwError);
-        const generateTemplateExport = createGenerateTemplateExport(getTemplatesFunctionName);
 
-        const scriptTag = scriptTagExtractor(fragmentDOM);
-        const templateTags = templatesExtractor(fragmentDOM);
+        const scriptSource = pipe(
+            createScriptExtractor(throwError),
+            getScriptSource
+        )(fragmentDOM);
 
-        const scriptSource = getScriptSource(scriptTag);
-        const templateDictionary = mapTemplateTags(templateTags);
+        const templateDictionary = pipe(
+            createTemplatesExtractor(throwError),
+            mapTemplateTags
+        )(fragmentDOM);
 
         return prependToModule(
             scriptSource,

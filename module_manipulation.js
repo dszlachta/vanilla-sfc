@@ -3,6 +3,8 @@ import parser from '@babel/parser';
 import generator from '@babel/generator';
 import t from '@babel/types';
 
+import { identity } from './functional.js';
+
 const template = templateModule.default;
 const generate = generator.default;
 const { parse } = parser;
@@ -35,7 +37,8 @@ export function createGenerateTemplateExport(exportName) {
 export function prependToModule(moduleSource, newContent) {
     const moduleProgram = [
         template.ast(moduleSource)
-    ].flatMap(x => x);
+    ].flatMap(identity);
+
     const newContentProgram = t.program([newContent]);
 
     return generate(t.program([
