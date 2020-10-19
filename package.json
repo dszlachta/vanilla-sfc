@@ -1,7 +1,7 @@
 {
     "name": "vanilla-sfc",
     "type": "module",
-    "version": "0.0.1",
+    "version": "0.6.0",
     "description": "A tool for extracting template and script tags from a single file",
     "main": "index.js",
     "scripts": {
