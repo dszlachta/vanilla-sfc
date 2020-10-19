@@ -1,0 +1,17 @@
+<template>
+    <div class="component">
+        {{ data }}
+    </div>
+</template>
+
+<template id="second">
+    <span>
+        Second template content
+    </span>
+</template>
+
+<script>
+export default function component(template, state) {
+    return template.replace(/{{\s*[a-z]+\s*}}/, state);
+}
+</script>

@@ -18,10 +18,10 @@ test('generateDictionaryOfStrings', t => {
 });
 
 test('createGenerateTemplateExport', t => {
-    const generateTemplateExport = ModuleManipulation.createGenerateTemplateExport('someName');
+    const generateTemplatesExport = ModuleManipulation.createGenerateTemplatesExport('someName');
     const returnValue = () => types.numericLiteral(42);
 
-    const result = generateTemplateExport(returnValue);
+    const result = generateTemplatesExport(returnValue);
 
     t.assert(types.isExportNamedDeclaration(result));
 });

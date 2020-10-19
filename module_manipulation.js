@@ -9,6 +9,9 @@ const template = templateModule.default;
 const generate = generator.default;
 const { parse } = parser;
 
+// Turns `sourceObject` into Babel's ObjectExpression node to produce
+// a dictionary: { key: value }
+// Returns AST
 export function generateDictionaryOfStrings(sourceObject) {
     return t.objectExpression(
         Object.entries(sourceObject)
@@ -19,14 +22,19 @@ export function generateDictionaryOfStrings(sourceObject) {
     );
 }
 
-export function createGenerateTemplateExport(exportName) {
+// Returns a function that performs code generation.
+// `exportName` - name for the export (string)
+export function createGenerateTemplatesExport(exportName) {
     const buildExport = template(`
         export function NAME() {
             return RETURN_VALUE;
         }
     `);
 
-    return function generateTemplateExport(getReturnValue) {
+    // Generates the above export.
+    // `getReturnValue` - function returning Babel's Statement node
+    // Returns AST
+    return function generateTemplatesExport(getReturnValue) {
         return buildExport({
             NAME: t.identifier(exportName),
             RETURN_VALUE: getReturnValue()
@@ -34,6 +42,11 @@ export function createGenerateTemplateExport(exportName) {
     };
 }
 
+// Creates a new module source code containing `newContent` (at the
+// beginning) and `moduleSource`.
+// `moduleSource` - the original source code (string)
+// `newContent` - AST of code to prepend (AST)
+// Returns a string.
 export function prependToModule(moduleSource, newContent) {
     const moduleProgram = [
         template.ast(moduleSource)

@@ -1,4 +1,7 @@
 export function createScriptExtractor(throwError) {
+    // Finds and returns `<script>` element from the given DocumentFragment
+    // fragmentDOM - JSDOM DocumentFragment
+    // Returns JSDOM Element
     return function extractScript(fragmentDOM) {
         const scriptTags = [...fragmentDOM.querySelectorAll('script')];
 
@@ -24,6 +27,9 @@ export function getScriptSource(scriptTag) {
 }
 
 export function createTemplatesExtractor(throwError) {
+    // Finds and returns all `<template>` elements from the given DocumentFragment
+    // fragmentDOM - JSDOM DocumentFragment
+    // Returns an array of JSDOM Elements
     return function extractTemplates(fragmentDOM) {
         const templateTags = [...fragmentDOM.querySelectorAll('template')];
 
@@ -35,47 +41,17 @@ export function createTemplatesExtractor(throwError) {
     };
 }
 
-export function getTemplateContent(templateTag) {
+// Returns a pair of template ID and template content
+export function getTemplateContent(templateElement) {
     return [
-        templateTag.id || 'default',
-        templateTag.innerHTML
+        templateElement.id || 'default',
+        templateElement.innerHTML
     ];
 }
 
-export function mapTemplateTags(templateTags) {
+// Returns a directory of template ID and template content
+export function mapTemplateTags(templateElements) {
     return Object.fromEntries(
-        templateTags.map(getTemplateContent)
+        templateElements.map(getTemplateContent)
     );
 }
-
-// export function toJavaScript(filePath) {
-//     const throwError = (message) => {
-//         throw new Error(`In file: ${filePath}: ${message}`);
-//     };
-
-//     const extractScript = createScriptExtractor(throwError);
-
-//     // TODO: rename it
-//     return function inner(content) {
-//         const contentDOM = fragment(content);
-
-
-
-
-
-//         // TODO: add: only 1 default validation
-//         const templateDictionary = Object.fromEntries(
-//             templateTags.map(templateTag => [
-//                 templateTag.id || 'default',
-//                 templateTag.innerHTML
-//             ])
-//         );
-
-//         const scriptTagContent = scriptTags[0].textContent;
-
-//         return [
-//             scriptTagContent,
-//             `export _getTemplates = () => ${JSON.stringify(templateDictionary)};`;
-//         ].join('\n');
-//     };
-// }

@@ -2,22 +2,22 @@ import jsdom from 'jsdom';
 
 import { pipe } from './functional.js';
 import {
+    createScriptExtractor,
     createTemplatesExtractor,
     getScriptSource,
     mapTemplateTags,
-    createScriptExtractor,
 } from './sfc.js';
 import {
-    createGenerateTemplateExport,
+    createGenerateTemplatesExport,
     generateDictionaryOfStrings,
     prependToModule,
 } from './module_manipulation.js';
 
 const { fragment } = jsdom.JSDOM;
 
-export const getTemplatesFunctionName = '_getTemplates';
+export const templatesGetterName = '__v_sfc_getTemplates';
 
-const generateTemplateExport = createGenerateTemplateExport(getTemplatesFunctionName);
+const generateTemplatesExport = createGenerateTemplatesExport(templatesGetterName);
 
 export function createConvert(filePath) {
     const throwError = (message) => {
@@ -39,7 +39,7 @@ export function createConvert(filePath) {
 
         return prependToModule(
             scriptSource,
-            generateTemplateExport(
+            generateTemplatesExport(
                 () => generateDictionaryOfStrings(templateDictionary)
             )
         );
