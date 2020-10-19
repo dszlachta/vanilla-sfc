@@ -4,7 +4,7 @@ import parser from '@babel/parser';
 
 const { parse } = parser;
 
-import * as ModuleManipulation from '../module_manipulation.js';
+import * as ModuleManipulation from '../src/module_manipulation.js';
 
 test('generateDictionaryOfStrings', t => {
     const dictionary = ModuleManipulation.generateDictionaryOfStrings(

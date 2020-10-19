@@ -1,7 +1,7 @@
 import test from 'ava';
 import jsdom from 'jsdom';
 
-import * as Sfc from '../sfc.js';
+import * as Sfc from '../src/sfc.js';
 
 const { fragment } = jsdom.JSDOM;
 

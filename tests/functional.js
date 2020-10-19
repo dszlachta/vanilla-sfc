@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import * as Functional from '../functional.js';
+import * as Functional from '../src/functional.js';
 
 test('identity', t => {
     const object = {};

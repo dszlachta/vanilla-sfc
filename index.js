@@ -1,4 +1,4 @@
 export {
     createConvert as default,
     templatesGetterName,
-} from './convert.js';
+} from './src/convert.js';

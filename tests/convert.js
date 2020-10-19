@@ -6,7 +6,7 @@ import parser from '@babel/parser';
 import types from '@babel/types';
 
 import { templatesGetterName } from '../index.js';
-import { createConvert } from '../convert.js';
+import { createConvert } from '../src/convert.js';
 
 const { parse } = parser;
 
